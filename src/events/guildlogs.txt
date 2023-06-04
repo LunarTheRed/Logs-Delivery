@@ -1,0 +1,11 @@
+const {AuditLogEvent} = require('discord.js');
+
+module.exports = {
+    name: "messageUpdate",
+    async execute(client, oldGuild, newGuild) {
+        if(!oldGuild || !newGuild) return;
+
+        await newGuild.fetchAuditLogs({type:AuditLogEvent.MessageDelete, limit: 1}).then(audit => console.log(audit.entries.first().executor.id))
+        .catch(console.error);
+    }
+}
